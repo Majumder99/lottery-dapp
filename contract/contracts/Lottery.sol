@@ -17,8 +17,12 @@ contract Lottery {
         participants.push(payable(msg.sender));
     }
 
-    function getBalance() public view returns(uint){
-        require(msg.sender == manager );
+    modifier onlyOwner(){
+        require(msg.sender == manager, "You should be the owner of the contract");
+        _;
+    }
+
+    function getBalance() public view onlyOwner returns(uint){
         return address(this).balance;
     }
     function random() public view returns(uint){
@@ -26,8 +30,7 @@ contract Lottery {
         //you can encode with one string also
         return uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, participants.length)));
     }
-    function setWinner() public {
-        require(msg.sender == manager);
+    function setWinner() public onlyOwner {
         require(participants.length >= 3);
         uint r = random();
         address payable winner;
@@ -37,5 +40,9 @@ contract Lottery {
         // reset the participants list
         // now the participants will be zero
         participants = new address payable[](0);
+    }
+
+    function allPlayers() public view returns(address payable[] memory){
+      return participants;
     }
 }
