@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Web3 from "web3";
 import detectEthereumProvider from "@metamask/detect-provider";
 import Lottery from "../../contract/build/contracts/Lottery.json";
+import Manager from "./components/Manager";
 
 const App = () => {
   const [state, setState] = useState({
@@ -28,10 +29,10 @@ const App = () => {
     };
     loadProvider();
   }, []);
-  console.log(Lottery.networks[5777].address);
+  // console.log(Lottery.networks[5777].address);
   return (
     <>
-      <div>Hello world</div>
+      <Manager state={state} />
     </>
   );
 };

@@ -6,7 +6,7 @@ contract Lottery {
     address payable[] public participants;
 
     constructor(){
-        //give authority to managerf
+        //give authority to manager
         //creates the manager
         manager = msg.sender;
     }
@@ -31,7 +31,7 @@ contract Lottery {
         return uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, participants.length)));
     }
     function setWinner() public onlyOwner {
-        require(participants.length >= 3);
+        require(participants.length >= 3, "participant is not greater than 3");
         uint r = random();
         address payable winner;
         uint index = r % participants.length;
