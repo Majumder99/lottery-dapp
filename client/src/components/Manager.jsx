@@ -4,7 +4,11 @@ const Manager = ({ state }) => {
   const [account, setAccount] = useState("");
   const [balance, setBalance] = useState(0);
   const [winner, setWinner] = useState("No winner yet");
+  const [reload, setReload] = useState(false);
 
+  const reloadEffect = () => {
+    setReload(!reload);
+  };
   useEffect(() => {
     const getAccount = async () => {
       const { web3, contract } = state;
@@ -13,7 +17,7 @@ const Manager = ({ state }) => {
       console.log(accounts[0]);
     };
     state.web3 && getAccount();
-  }, [state]);
+  }, [state, state.web3, reload]);
 
   const handleAccount = async () => {
     const { web3, contract } = state;
@@ -48,6 +52,15 @@ const Manager = ({ state }) => {
   return (
     <>
       <div>Nothing is here momoy</div>
+      <div>
+        <button
+          onClick={reloadEffect}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Account
+        </button>
+        <div>{account}</div>
+      </div>
       <div>
         <button
           onClick={handleAccount}

@@ -3,6 +3,7 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract Lottery {
   address public manager;
+  address payable public winner;
     address payable[] public participants;
 
     constructor(){
@@ -33,7 +34,6 @@ contract Lottery {
     function setWinner() public onlyOwner {
         require(participants.length >= 3, "participant is not greater than 3");
         uint r = random();
-        address payable winner;
         uint index = r % participants.length;
         winner = participants[index];
         winner.transfer(getBalance());

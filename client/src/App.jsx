@@ -3,6 +3,9 @@ import Web3 from "web3";
 import detectEthereumProvider from "@metamask/detect-provider";
 import Lottery from "../../contract/build/contracts/Lottery.json";
 import Manager from "./components/Manager";
+import Player from "./components/Player";
+import { Routes, Route, Link } from "react-router-dom";
+import Intro from "./components/Intro";
 
 const App = () => {
   const [state, setState] = useState({
@@ -32,7 +35,16 @@ const App = () => {
   // console.log(Lottery.networks[5777].address);
   return (
     <>
-      <Manager state={state} />
+      <Routes>
+        <Route path="/" element={<Intro />} />
+        <Route path="/manager" element={<Manager state={state} />} />
+        <Route
+          path="/players"
+          element={
+            <Player state={state} address={Lottery.networks[5777].address} />
+          }
+        />
+      </Routes>
     </>
   );
 };
